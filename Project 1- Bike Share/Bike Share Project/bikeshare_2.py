@@ -209,6 +209,43 @@ def user_stats(df,city):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
+def show_sample_of_data(df):
+    '''
+    Display a sample of the filtered data if the user wants to see it.
+    '''
+    #ask the user if he/she would like to see a sample of the filtered data
+    answer1 = input("would you like to see a sample of the data? (yes or no)\n")
+
+    # let the user choose the start row number and end row number
+    if answer1 == "yes":
+
+        # make sure that the user didn't enter invalid input causing an error
+        try:
+            print("HINT: The presented data sample is arranged based on your filters not on the true indices unless you chose all months and all days ")
+            indices = input("please enter your start row number 'INCLUDED' and end row number 'EXCLUDED' seperated by a comma (ex: 5,10)\n")
+            start_index= int(indices.split(",")[0])
+            end_index= int(indices.split(",")[1])
+            interval= end_index-start_index # does not need to be 5 any interval based on the entered indices
+            print("data from row number {} to row number {} are:\n".format(start_index,end_index))
+            print(df.iloc[start_index:end_index])
+
+        # if the user entered an input caused an error he/she will know it without effecting the whole program.
+        except Exception as e:
+            print(e)
+            print("\nmake sure you enter integers only seperated by a comma, and be within the data range\n")
+            show_sample_of_data(df) #calling the function again to give the user the chance to try again
+
+        # ask the user again if he/she wants to see the next interval of rows
+        else:
+            answer2 = input("would you like to see the next {} rows? (yes or no)\n".format(interval))
+            while answer2=='yes':
+                start_index+=interval
+                end_index+=interval
+                print("data from row No. {} to row No. {} are:\n".format(start_index,end_index).format(interval))
+                print(df.iloc[start_index:end_index])
+                answer2 = input("\nwould you like to see the next {} rows? (yes or no)\n".format(interval))
+
+
 
 def main():
     while True:
@@ -219,7 +256,10 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df,city)
-        print("\nThis data was for:\n city: {} , month(s): {} , day(s) of week: {} \n".format(city,month,day))
+        show_sample_of_data(df)
+
+
+        print("\nThese statistics were for:\n city: {} , month(s): {} , day(s) of week: {} \n".format(city,month,day))
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
