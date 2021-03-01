@@ -8,6 +8,9 @@ Track syllabus:
 - Digital freelancing intro. and pro.
 
 Projects:
-1- US Bike Share
-2- Wrangle and Analyze tweets archive data of WeRateDogs Twitter account
-3-Conquer the freelancing marketplaces
+
+- 1- US Bike Share
+
+- 2- Wrangle and Analyze tweets archive data of WeRateDogs Twitter account
+
+- 3-Conquer the freelancing marketplaces
